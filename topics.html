@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GYANDEEP QUIZ - Topics</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f2f6ff;
+    min-height:100vh;
+}
+
+.header{
+    background:#0b5ed7;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+.header h1{
+    font-size:27px;
+}
+
+.header p{
+    margin-top:8px;
+}
+
+.container{
+    width:92%;
+    max-width:600px;
+    margin:30px auto;
+}
+
+.subject-name{
+    text-align:center;
+    font-size:21px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.topic{
+    background:white;
+    padding:18px;
+    margin-bottom:13px;
+    border-radius:13px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.12);
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.topic:hover{
+    transform:translateY(-2px);
+}
+
+.topic span{
+    margin-right:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>GYANDEEP QUIZ APP</h1>
+    <p>Topic Select करें</p>
+</div>
+
+<div class="container">
+
+    <div class="subject-name" id="subjectName"></div>
+
+    <div id="topicList"></div>
+
+</div>
+
+<script>
+
+let subject = localStorage.getItem("selectedSubject");
+
+document.getElementById("subjectName").innerText =
+"📚 " + subject + " — Topic चुनें";
+
+
+let topics = {
+
+    "Physics":[
+        "Motion",
+        "Force",
+        "Work & Energy",
+        "Light",
+        "Electricity"
+    ],
+
+    "Chemistry":[
+        "Matter",
+        "Atom",
+        "Chemical Reaction",
+        "Acid Base",
+        "Periodic Table"
+    ],
+
+    "Maths":[
+        "Number System",
+        "Percentage",
+        "Profit & Loss",
+        "Ratio",
+        "Time & Work"
+    ],
+
+    "Biology":[
+        "Cell",
+        "Human Body",
+        "Plant Biology",
+        "Genetics",
+        "Environment"
+    ],
+
+    "English":[
+        "Grammar",
+        "Tense",
+        "Vocabulary",
+        "Synonyms & Antonyms",
+        "Comprehension"
+    ],
+
+    "Computer":[
+        "Computer Basics",
+        "Hardware",
+        "Software",
+        "Internet",
+        "MS Office"
+    ],
+
+    "UKSSSC":[
+        "उत्तराखंड सामान्य ज्ञान",
+        "उत्तराखंड का इतिहास",
+        "उत्तराखंड का भूगोल",
+        "उत्तराखंड की संस्कृति",
+        "उत्तराखंड करंट अफेयर्स"
+    ],
+
+    "Current Affairs":[
+        "राष्ट्रीय करंट अफेयर्स",
+        "अंतरराष्ट्रीय करंट अफेयर्स",
+        "उत्तराखंड करंट अफेयर्स",
+        "खेल",
+        "विज्ञान एवं तकनीक"
+    ]
+
+};
+
+
+let list = document.getElementById("topicList");
+
+if(topics[subject]){
+
+    topics[subject].forEach(function(topic){
+
+        let div = document.createElement("div");
+
+        div.className = "topic";
+
+        div.innerHTML = "<span>📖</span>" + topic;
+
+        div.onclick = function(){
+
+            localStorage.setItem("selectedTopic", topic);
+
+            window.location.href = "start-test.html";
+
+        };
+
+        list.appendChild(div);
+
+    });
+
+}else{
+
+    list.innerHTML =
+    "<p style='text-align:center;'>कोई Topic उपलब्ध नहीं है।</p>";
+
+}
+
+</script>
+
+</body>
+</html>

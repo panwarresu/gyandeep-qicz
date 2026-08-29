@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GYANDEEP QUIZ</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f2f6ff;
+}
+
+.header{
+    background:#0b5ed7;
+    color:white;
+    text-align:center;
+    padding:18px;
+}
+
+.quiz-box{
+    width:92%;
+    max-width:650px;
+    margin:25px auto;
+    background:white;
+    padding:22px;
+    border-radius:18px;
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    font-weight:bold;
+    margin-bottom:18px;
+}
+
+.timer{color:red}
+
+.question{
+    font-size:20px;
+    font-weight:bold;
+    line-height:1.5;
+    margin:20px 0;
+}
+
+.option{
+    width:100%;
+    padding:15px;
+    margin:9px 0;
+    border:2px solid #ddd;
+    border-radius:10px;
+    background:white;
+    text-align:left;
+    font-size:17px;
+}
+
+.option.selected{
+    border-color:#0b5ed7;
+    background:#e7f0ff;
+}
+
+.next-btn{
+    width:100%;
+    padding:15px;
+    margin-top:18px;
+    border:0;
+    border-radius:10px;
+    background:#0b5ed7;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>GYANDEEP QUIZ APP</h1>
+</div>
+
+<div class="quiz-box">
+
+    <div class="top">
+        <div id="questionNumber">Question 1/50</div>
+        <div class="timer" id="timer">30:00</div>
+    </div>
+
+    <div class="question" id="question"></div>
+
+    <div id="options"></div>
+
+    <button class="next-btn" onclick="nextQuestion()">
+        NEXT →
+    </button>
+
+</div>
+
+<script>
+
+/* =========================
+   QUESTIONS
+========================= */
+
+const questions = [
+
+{
+question:"उत्तराखंड राज्य का गठन किस वर्ष हुआ?",
+options:["1998","1999","2000","2001"],
+answer:2
+},
+
+{
+question:"उत्तराखंड की राजधानी क्या है?",
+options:["हरिद्वार","देहरादून","नैनीताल","अल्मोड़ा"],
+answer:1
+},
+
+{
+question:"उत्तराखंड का राज्य पशु कौन सा है?",
+options:["हिम तेंदुआ","कस्तूरी मृग","बाघ","हाथी"],
+answer:1
+},
+
+{
+question:"उत्तराखंड का राज्य पक्षी कौन सा है?",
+options:["मोर","कोयल","हिमालयन मोनाल","बाज"],
+answer:2
+},
+
+{
+question:"उत्तराखंड में कितने मंडल हैं?",
+options:["1","2","3","4"],
+answer:1
+},
+
+{
+question:"नैनीताल किस मंडल में स्थित है?",
+options:["गढ़वाल","कुमाऊँ","हरिद्वार","देहरादून"],
+answer:1
+},
+
+{
+question:"उत्तराखंड की सबसे ऊँची चोटी कौन सी है?",
+options:["नंदा देवी","त्रिशूल","चौखंबा","केदारनाथ"],
+answer:0
+},
+
+{
+question:"गंगोत्री राष्ट्रीय उद्यान किस जिले में है?",
+options:["चमोली","उत्तरकाशी","पिथौरागढ़","अल्मोड़ा"],
+answer:1
+},
+
+{
+question:"बद्रीनाथ धाम किस जिले में स्थित है?",
+options:["चमोली","रुद्रप्रयाग","उत्तरकाशी","टिहरी"],
+answer:0
+},
+
+{
+question:"केदारनाथ धाम किस जिले में स्थित है?",
+options:["चमोली","रुद्रप्रयाग","उत्तरकाशी","पौड़ी"],
+answer:1
+}
+
+];
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let currentQuestion = 0;
+let score = 0;
+let correctAnswers = 0;
+let wrongAnswers = 0;
+let selectedAnswer = null;
+
+let quizAnswers = [];
+
+
+/* =========================
+   LOAD QUESTION
+========================= */
+
+function loadQuestion(){
+
+    let q = questions[currentQuestion];
+
+    document.getElementById("questionNumber").innerText =
+        "Question " +
+        (currentQuestion + 1) +
+        "/" +
+        questions.length;
+
+    document.getElementById("question").innerText =
+        q.question;
+
+    let box =
+        document.getElementById("options");
+
+    box.innerHTML = "";
+
+    q.options.forEach(function(option,index){
+
+        let button =
+            document.createElement("button");
+
+        button.className = "option";
+
+        button.innerText =
+            String.fromCharCode(65 + index) +
+            ". " +
+            option;
+
+        button.onclick = function(){
+
+            selectAnswer(button,index);
+
+        };
+
+        box.appendChild(button);
+
+    });
+
+    selectedAnswer = null;
+}
+
+
+/* =========================
+   SELECT ANSWER
+========================= */
+
+function selectAnswer(button,index){
+
+    selectedAnswer = index;
+
+    document.querySelectorAll(".option")
+        .forEach(function(btn){
+
+            btn.classList.remove("selected");
+
+        });
+
+    button.classList.add("selected");
+}
+
+
+/* =========================
+   NEXT QUESTION
+========================= */
+
+function nextQuestion(){
+
+    if(selectedAnswer === null){
+
+        alert("पहले एक उत्तर चुनें!");
+
+        return;
+    }
+
+    let q = questions[currentQuestion];
+
+    let isCorrect =
+        selectedAnswer === q.answer;
+
+
+    /* SCORE */
+
+    if(isCorrect){
+
+        score += 1;
+        correctAnswers++;
+
+    }else{
+
+        score -= 0.25;
+        wrongAnswers++;
+
+    }
+
+
+    /* SAVE COMPLETE ANSWER HISTORY */
+
+    quizAnswers.push({
+
+        question:q.question,
+
+        options:q.options,
+
+        selected:selectedAnswer,
+
+        selectedText:
+            q.options[selectedAnswer],
+
+        correct:q.answer,
+
+        correctText:
+            q.options[q.answer],
+
+        isCorrect:isCorrect,
+
+        marks:
+            isCorrect ? 1 : -0.25
+
+    });
+
+
+    currentQuestion++;
+
+
+    /* NEXT QUESTION */
+
+    if(currentQuestion < questions.length){
+
+        loadQuestion();
+
+    }else{
+
+        finishQuiz();
+
+    }
+
+}
+
+
+/* =========================
+   FINISH QUIZ
+========================= */
+
+function finishQuiz(){
+
+    localStorage.setItem(
+        "quizScore",
+        score.toFixed(2)
+    );
+
+    localStorage.setItem(
+        "totalQuestions",
+        questions.length
+    );
+
+    localStorage.setItem(
+        "correctAnswers",
+        correctAnswers
+    );
+
+    localStorage.setItem(
+        "wrongAnswers",
+        wrongAnswers
+    );
+
+    localStorage.setItem(
+        "quizAnswers",
+        JSON.stringify(quizAnswers)
+    );
+
+    window.location.href =
+        "result.html";
+
+}
+
+
+/* =========================
+   TIMER
+========================= */
+
+let time = 30 * 60;
+
+let timer = setInterval(function(){
+
+    let minutes =
+        Math.floor(time / 60);
+
+    let seconds =
+        time % 60;
+
+    seconds =
+        seconds < 10
+        ? "0" + seconds
+        : seconds;
+
+    document.getElementById("timer").innerText =
+        minutes + ":" + seconds;
+
+    time--;
+
+    if(time < 0){
+
+        clearInterval(timer);
+
+        finishQuiz();
+
+    }
+
+},1000);
+
+
+/* START */
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GYANDEEP QUIZ - PDF</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f2f6ff;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:850px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:15px;
+}
+
+.header{
+    text-align:center;
+    border-bottom:2px solid #0b5ed7;
+    padding-bottom:15px;
+    margin-bottom:20px;
+}
+
+.header h1{
+    color:#0b5ed7;
+    margin:0;
+}
+
+.info{
+    line-height:1.8;
+    margin-bottom:20px;
+}
+
+.result{
+    background:#eef4ff;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.question{
+    border:1px solid #ddd;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:10px;
+}
+
+.question-title{
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.correct{
+    color:green;
+    font-weight:bold;
+}
+
+.wrong{
+    color:red;
+    font-weight:bold;
+}
+
+.btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#0b5ed7;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+@media print{
+
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .container{
+        box-shadow:none;
+        width:100%;
+        max-width:none;
+    }
+
+    .btn{
+        display:none;
+    }
+
+    .question{
+        break-inside:avoid;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container" id="pdfContent">
+
+    <div class="header">
+
+        <h1>GYANDEEP QUIZ</h1>
+
+        <p>Question & Answer Report</p>
+
+    </div>
+
+
+    <div class="info">
+
+        <b>Subject:</b>
+        <span id="subject">-</span>
+        <br>
+
+        <b>Topic:</b>
+        <span id="topic">-</span>
+
+    </div>
+
+
+    <div class="result">
+
+        <b>कुल प्रश्न:</b>
+        <span id="total">0</span>
+        <br>
+
+        <b>सही उत्तर:</b>
+        <span id="correct">0</span>
+        <br>
+
+        <b>गलत उत्तर:</b>
+        <span id="wrong">0</span>
+        <br>
+
+        <b>Final Score:</b>
+        <span id="score">0</span>
+
+    </div>
+
+
+    <div id="questionsList"></div>
+
+
+    <button class="btn" onclick="printPDF()">
+        📄 DOWNLOAD / SAVE PDF
+    </button>
+
+
+    <button class="btn" onclick="goHome()">
+        🏠 BACK TO SUBJECT
+    </button>
+
+</div>
+
+
+<script>
+
+let subject =
+localStorage.getItem("selectedSubject") || "-";
+
+let topic =
+localStorage.getItem("selectedTopic") || "-";
+
+let score =
+localStorage.getItem("quizScore") || "0";
+
+let total =
+localStorage.getItem("totalQuestions") || "0";
+
+let correct =
+localStorage.getItem("correctAnswers") || "0";
+
+let wrong =
+localStorage.getItem("wrongAnswers") || "0";
+
+
+document.getElementById("subject").innerText =
+subject;
+
+document.getElementById("topic").innerText =
+topic;
+
+document.getElementById("score").innerText =
+score + " Marks";
+
+document.getElementById("total").innerText =
+total;
+
+document.getElementById("correct").innerText =
+correct;
+
+document.getElementById("wrong").innerText =
+wrong;
+
+
+let answers =
+JSON.parse(localStorage.getItem("quizAnswers") || "[]");
+
+
+let list =
+document.getElementById("questionsList");
+
+
+answers.forEach(function(item,index){
+
+    let div =
+    document.createElement("div");
+
+    div.className = "question";
+
+    let status =
+    item.selected === item.correct;
+
+    div.innerHTML = `
+
+        <div class="question-title">
+            ${index + 1}. ${item.question}
+        </div>
+
+        <div>
+            आपका उत्तर:
+            <b>${item.selectedText || "उत्तर नहीं दिया"}</b>
+        </div>
+
+        <div>
+            सही उत्तर:
+            <b>${item.correctText}</b>
+        </div>
+
+        <div class="${status ? "correct" : "wrong"}">
+            ${status ? "✅ सही (+1)" : "❌ गलत (-0.25)"}
+        </div>
+
+    `;
+
+    list.appendChild(div);
+
+});
+
+
+function printPDF(){
+
+    window.print();
+
+}
+
+
+function goHome(){
+
+    window.location.href =
+    "subjects.html";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GYANDEEP QUIZ - Start Test</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial,sans-serif;
+    background:#f2f6ff;
+}
+
+.test-box{
+    width:92%;
+    max-width:450px;
+    background:white;
+    padding:35px 25px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#0b5ed7;
+    margin-bottom:20px;
+}
+
+.info{
+    background:#f1f5ff;
+    padding:18px;
+    border-radius:12px;
+    margin-bottom:25px;
+    line-height:1.8;
+}
+
+.info b{
+    color:#0b5ed7;
+}
+
+.start-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#0b5ed7;
+    color:white;
+    font-size:19px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.start-btn:hover{
+    background:#084298;
+}
+</style>
+</head>
+
+<body>
+
+<div class="test-box">
+
+    <div class="logo">
+        GYANDEEP QUIZ
+    </div>
+
+    <div class="info">
+
+        <div>
+            📚 Subject:
+            <b id="subject"></b>
+        </div>
+
+        <div>
+            📖 Topic:
+            <b id="topic"></b>
+        </div>
+
+        <div>
+            📝 Questions:
+            <b>50</b>
+        </div>
+
+        <div>
+            ⏱️ Time:
+            <b>30 Minutes</b>
+        </div>
+
+        <div>
+            ❌ Negative Marking:
+            <b>0.25</b>
+        </div>
+
+    </div>
+
+    <button class="start-btn" onclick="startTest()">
+        🚀 START TEST
+    </button>
+
+</div>
+
+<script>
+
+let subject = localStorage.getItem("selectedSubject");
+let topic = localStorage.getItem("selectedTopic");
+
+document.getElementById("subject").innerText =
+subject || "Not Selected";
+
+document.getElementById("topic").innerText =
+topic || "Not Selected";
+
+
+function startTest(){
+
+    window.location.href = "quiz.html";
+
+}
+
+</script>
+
+</body>
+</html>

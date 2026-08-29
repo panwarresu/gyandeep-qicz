@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GYANDEEP QUIZ - Result</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial,sans-serif;
+    background:#f2f6ff;
+}
+
+.result-box{
+    width:92%;
+    max-width:450px;
+    background:white;
+    padding:30px 25px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 8px 25px rgba(0,0,0,.15);
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#0b5ed7;
+}
+
+.title{
+    font-size:24px;
+    margin:20px 0;
+}
+
+.score{
+    font-size:48px;
+    font-weight:bold;
+    color:#0b5ed7;
+    margin:15px 0;
+}
+
+.details{
+    line-height:2;
+    margin-bottom:25px;
+    color:#444;
+}
+
+.btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#0b5ed7;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    margin-top:10px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="result-box">
+
+    <div class="logo">
+        GYANDEEP QUIZ
+    </div>
+
+    <div class="title">
+        🎉 TEST COMPLETE
+    </div>
+
+    <div class="score" id="score">
+        0
+    </div>
+
+    <div class="details">
+        कुल प्रश्न: <b id="total">0</b><br>
+        सही उत्तर: <b id="correct">0</b><br>
+        गलत उत्तर: <b id="wrong">0</b>
+    </div>
+
+    <button class="btn" onclick="goSubject()">
+        📚 SUBJECT पर जाएँ
+    </button>
+
+    <button class="btn" onclick="goTopic()">
+        📖 TOPIC पर जाएँ
+    </button>
+
+</div>
+<button class="btn" onclick="openPDF()">
+    📄 QUESTION + ANSWER PDF
+</button>
+<script>
+
+let score = Number(localStorage.getItem("quizScore")) || 0;
+
+let total =
+Number(localStorage.getItem("totalQuestions")) || 0;
+
+let correct =
+Number(localStorage.getItem("correctAnswers")) || 0;
+
+let wrong =
+Number(localStorage.getItem("wrongAnswers")) || 0;
+
+
+document.getElementById("score").innerText =
+score.toFixed(2) + " Marks";
+
+document.getElementById("total").innerText =
+total;
+
+document.getElementById("correct").innerText =
+correct;
+
+document.getElementById("wrong").innerText =
+wrong;
+
+
+function goSubject(){
+
+    window.location.href = "subjects.html";
+
+}
+
+function goTopic(){
+
+    window.location.href = "topics.html";
+
+}
+function openPDF(){
+
+    window.location.href = "pdf.html";
+
+}
+</script>
+
+</body>
+</html>

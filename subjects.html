@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GYANDEEP QUIZ - Subjects</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    background:#f2f6ff;
+}
+
+.header{
+    background:#0b5ed7;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+.header h1{
+    font-size:28px;
+}
+
+.header p{
+    margin-top:8px;
+}
+
+.container{
+    width:92%;
+    max-width:600px;
+    margin:30px auto;
+}
+
+.container h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#222;
+}
+
+.subjects{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.subject{
+    background:white;
+    padding:25px 10px;
+    border-radius:15px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 4px 15px rgba(0,0,0,0.12);
+    transition:0.2s;
+}
+
+.subject:hover{
+    transform:translateY(-3px);
+}
+
+.subject span{
+    display:block;
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>GYANDEEP QUIZ APP</h1>
+    <p>Subject Select करें</p>
+</div>
+
+<div class="container">
+
+    <h2>अपना Subject चुनें</h2>
+
+    <div class="subjects">
+
+        <div class="subject" onclick="selectSubject('UKSSSC')">
+            <span>⚛️</span>
+            UKSSSC Mock Test
+        </div>
+
+        <div class="subject" onclick="selectSubject('हिन्‍दी')">
+            <span>🧪</span>
+            हिन्‍दी
+        </div>
+
+        <div class="subject" onclick="selectSubject('REASONING')">
+            <span>📐</span>
+            REASONING
+        </div>
+
+        <div class="subject" onclick="selectSubject('राजनीति विज्ञान ')">
+            <span>🧬</span>
+            राजनीति विज्ञान 
+        </div>
+
+        <div class="subject" onclick="selectSubject('भूगोल ')">
+            <span>📚</span>
+            भूगोल 
+        </div>
+
+        <div class="subject" onclick="selectSubject('Computer')">
+            <span>💻</span>
+            Computer
+        </div>
+
+        <div class="subject" onclick="selectSubject('इतिहास')">
+            <span>🏔️</span>
+            इतिहास
+        </div>
+<div class="subject" onclick="selectSubject('अर्थशास्‍त्र')">
+            <span>🏔️</span>
+            अर्थशास्‍त्र
+        </div>
+        <div class="subject" onclick="selectSubject('Current Affairs')">
+            <span>📰</span>
+            Current Affairs
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function selectSubject(subject){
+
+    localStorage.setItem("selectedSubject", subject);
+
+    window.location.href = "topics.html";
+
+}
+
+
+   
+
+</script>
+
+</body>
+</html>
